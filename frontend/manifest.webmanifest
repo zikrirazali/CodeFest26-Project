@@ -1,0 +1,9 @@
+{
+  "name": "Tempa – Active Learning Arena",
+  "short_name": "Tempa",
+  "start_url": "./#/home",
+  "display": "standalone",
+  "background_color": "#f5f8fb",
+  "theme_color": "#0b7fd6",
+  "icons": [{ "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }]
+}

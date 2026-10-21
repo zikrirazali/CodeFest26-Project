@@ -1,0 +1,27 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: tempa
+      POSTGRES_PASSWORD: tempa
+      POSTGRES_DB: tempa
+    volumes: [pgdata:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U tempa"]
+      interval: 3s
+      retries: 20
+
+  api:
+    build: .
+    ports: ["8000:8000"]
+    environment:
+      DATABASE_URL: postgresql+psycopg://tempa:tempa@db:5432/tempa
+      JWT_SECRET: ${JWT_SECRET:-change-me}
+      LEDGER_SECRET: ${LEDGER_SECRET:-change-me-too}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      SEED_DEMO: "true"
+    depends_on:
+      db: { condition: service_healthy }
+
+volumes:
+  pgdata:
